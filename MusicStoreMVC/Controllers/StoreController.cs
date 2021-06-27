@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MusicStoreMVC.ViewModels;
 
 namespace MusicStoreMVC.Controllers
 {
     public class StoreController : Controller
     {
         // GET: Store
-        public string Index()
+        public ActionResult Index()
         {
-            return "Hello from Store.Index";
+            var genres = new List<string> { "Rock", "Jazz", "Country", "Pop", "Disco" };
+
+            var viewModel = new StoreIndexViewModel
+            {
+                NumberofGenres = genres.Count(),
+                Genres = genres
+            };
+
+            return View(viewModel);
         }
 
         // GET: /Store/Browse
