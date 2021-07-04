@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MusicStoreMVC.ViewModels;
+using MusicStoreMVC.Models;
 
 namespace MusicStoreMVC.Controllers
 {
@@ -12,8 +13,10 @@ namespace MusicStoreMVC.Controllers
         // GET: Store
         public ActionResult Index()
         {
+            //Create a list of Genres
             var genres = new List<string> { "Rock", "Jazz", "Country", "Pop", "Disco" };
 
+            //Create a View Model
             var viewModel = new StoreIndexViewModel
             {
                 NumberofGenres = genres.Count(),
@@ -24,17 +27,30 @@ namespace MusicStoreMVC.Controllers
         }
 
         // GET: /Store/Browse
-        public string Browse(string genre)
+        public ActionResult Browse()
         {
-            string message = "Store.Browse, Genre = " + Server.HtmlEncode(genre);
-            return message;
+            string genreName = Server.HtmlEncode(Request.QueryString["genre"]);
+            var genre = new Genre {
+                Name = genreName
+            };
+            var albums = new List<Album>();
+            albums.Add(new Album { Title = genreName + "Album 1" });
+            albums.Add(new Album { Title = genreName + "Album 2" });
+
+            var viewModel = new StoreBrowseViewModel
+            {
+                Genre = genre,
+                Albums = albums
+            };
+
+            return View(viewModel);
         }
 
         // GET: /Store/Details/5
-        public string Details(int id)
+        public ActionResult Details(int id)
         {
-            string message = "Store.Details, Id = " + id;
-            return Server.HtmlEncode(message);
+            var album = new Album { Title = "Sample Album" };
+            return View(album);
         }
     }
 }

@@ -11,7 +11,7 @@
     @foreach (string genreName in @Model.Genres)
     {
         <li>
-            @genreName
+            @Html.ActionLink(genreName, "Browse", "Store", new { genre = genreName }, null);
         </li>
     }
 </ul>
