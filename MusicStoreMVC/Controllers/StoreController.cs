@@ -10,37 +10,36 @@ namespace MusicStoreMVC.Controllers
 {
     public class StoreController : Controller
     {
+        MusicStoreEntities storeDB = new MusicStoreEntities();
+
         // GET: Store
         public ActionResult Index()
         {
-            //Create a list of Genres
-            var genres = new List<string> { "Rock", "Jazz", "Country", "Pop", "Disco" };
+            //Retrieve list of Genres from Database
+            var genres = from genre in storeDB.Genres
+                         select genre.Name;
 
-            //Create a View Model
+            //Set up our View Model
             var viewModel = new StoreIndexViewModel
             {
                 NumberofGenres = genres.Count(),
-                Genres = genres
+                Genres = genres.ToList()
             };
 
+            //Return the View
             return View(viewModel);
         }
 
-        // GET: /Store/Browse
-        public ActionResult Browse()
+        // GET: /Store/Browse?Genre=Disco
+        public ActionResult Browse(string genre)
         {
-            string genreName = Server.HtmlEncode(Request.QueryString["genre"]);
-            var genre = new Genre {
-                Name = genreName
-            };
-            var albums = new List<Album>();
-            albums.Add(new Album { Title = genreName + "Album 1" });
-            albums.Add(new Album { Title = genreName + "Album 2" });
+            //Retreive Genre from database
+            var genreModel = storeDB.Genres.Include("Albums").Single(g => g.Name == genre);
 
             var viewModel = new StoreBrowseViewModel
             {
-                Genre = genre,
-                Albums = albums
+                Genre = genreModel,
+                Albums = genreModel.Albums.ToList()
             };
 
             return View(viewModel);
@@ -49,7 +48,8 @@ namespace MusicStoreMVC.Controllers
         // GET: /Store/Details/5
         public ActionResult Details(int id)
         {
-            var album = new Album { Title = "Sample Album" };
+            var album = storeDB.Albums.SingleOrDefault(a => a.AlbumId == id);
+            
             return View(album);
         }
     }

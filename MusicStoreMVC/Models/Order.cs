@@ -12,19 +12,29 @@ namespace MusicStoreMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Genre
+    public partial class Order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Genre()
+        public Order()
         {
-            this.Albums = new HashSet<Album>();
+            this.OrderDetails = new HashSet<OrderDetail>();
         }
     
-        public int GenreId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int OrderId { get; set; }
+        public System.DateTime OrderDate { get; set; }
+        public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string PostalCode { get; set; }
+        public string Country { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public decimal Total { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Album> Albums { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

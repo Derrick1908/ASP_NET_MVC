@@ -12,17 +12,16 @@ namespace MusicStoreMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Genre
+    public partial class Artist
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Genre()
+        public Artist()
         {
             this.Albums = new HashSet<Album>();
         }
     
-        public int GenreId { get; set; }
+        public int ArtistId { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Album> Albums { get; set; }
