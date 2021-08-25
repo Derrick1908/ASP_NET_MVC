@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MusicStoreMVC.Models.Album>
+@using MusicStoreMVC.Helpers
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/SiteMaster.cshtml";
+   
+}
+
+<h2>Albums</h2>
+
+<p>
+    @Html.ActionLink("Create New Album", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Genre</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.Truncate(@Html.DisplayFor(modelItem => item.Title).ToString(),25)
+        </td>
+        <td>
+            @Html.Truncate(@Html.DisplayFor(modelItem => item.Artist.Name).ToString(),25)
+        </td>
+        <td>
+            @Html.Truncate(@Html.DisplayFor(modelItem => item.Genre.Name).ToString(),25)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AlbumId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AlbumId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AlbumId })
+        </td>
+    </tr>
+}
+
+</table>
