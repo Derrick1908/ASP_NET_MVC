@@ -169,6 +169,7 @@
     <Content Include="Views\StoreManager\Index.cshtml" />
     <Content Include="Views\StoreManager\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Album.cshtml" />
+    <Content Include="Views\StoreManager\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

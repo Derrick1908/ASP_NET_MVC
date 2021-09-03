@@ -12,7 +12,7 @@ namespace MusicStoreMVC.Controllers
     {
         MusicStoreEntities storeDB = new MusicStoreEntities();
         
-        // GET: StoreManager/
+        // GET: /StoreManager/
         public ActionResult Index()
         {
             var albums = storeDB.Albums
@@ -23,29 +23,47 @@ namespace MusicStoreMVC.Controllers
         }
 
       
-        // GET: StoreManager/Create
+        // GET: /StoreManager/Create
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new StoreManagerViewModel
+            {
+                Album = new Album(),
+                Genres = storeDB.Genres.ToList(),
+                Artists = storeDB.Artists.ToList()
+            };
+
+            return View(viewModel);
         }
 
-        // POST: StoreManager/Create
+        // POST: /StoreManager/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Album album)
         {
             try
             {
-                // TODO: Add insert logic here
+                //Save Album
+                storeDB.Albums.Add(album);
+                storeDB.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("/");
             }
             catch
             {
-                return View();
+                //Invalid - redisplay with errors
+
+                var viewModel = new StoreManagerViewModel
+                {
+                    Album = album,
+                    Genres = storeDB.Genres.ToList(),
+                    Artists = storeDB.Artists.ToList()
+                };
+
+                return View(viewModel);
             }
         }
 
-        // GET: StoreManager/Edit/5
+        // GET: /StoreManager/Edit/5
         public ActionResult Edit(int id)
         {
             var viewModel = new StoreManagerViewModel
@@ -58,19 +76,30 @@ namespace MusicStoreMVC.Controllers
             return View(viewModel);
         }
 
-        // POST: StoreManager/Edit/5
+        // POST: /StoreManager/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            var album = storeDB.Albums.Single(a => a.AlbumId == id);
+
             try
             {
-                // TODO: Add update logic here
+                //Save Album
+
+                UpdateModel(album, "Album");
+                storeDB.SaveChanges();
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                var viewModel = new StoreManagerViewModel
+                {
+                    Album = album,
+                    Genres = storeDB.Genres.ToList(),
+                    Artists = storeDB.Artists.ToList()
+                };
+                return View(viewModel);
             }
         }
 
