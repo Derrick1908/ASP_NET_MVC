@@ -273,8 +273,11 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_InvoiceLine_Album">
-          <End Role="Album" Type="Self.Album" Multiplicity="1" />
-          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <End Role="Album" Type="Self.Album" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
             <Principal Role="Album">
               <PropertyRef Name="AlbumId" />

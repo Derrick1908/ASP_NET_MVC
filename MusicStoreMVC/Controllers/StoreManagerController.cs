@@ -103,26 +103,45 @@ namespace MusicStoreMVC.Controllers
             }
         }
 
-        // GET: StoreManager/Delete/5
+        // GET: /StoreManager/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var album = storeDB.Albums.Single(a => a.AlbumId == id);
+            
+            return View(album);
         }
 
-        // POST: StoreManager/Delete/5
+        // POST: /StoreManager/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, string confirmButton)
         {
             try
             {
-                // TODO: Add delete logic here
+                var album = storeDB.Albums
+                    .Include("OrderDetails").Include("Carts")
+                    .Single(a => a.AlbumId == id);
 
-                return RedirectToAction("Index");
+                // For simplicity, we're allowing deleting of albums
+                // with existing orders We've set up OnDelete = Cascade
+                // on the Album->OrderDetails and Album->Carts realtionships
+
+                storeDB.Albums.Remove(album);
+                storeDB.SaveChanges();
+
+                return View("Deleted");
             }
             catch
             {
                 return View();
             }
+        }
+
+
+        //Added -> Gets called when an Album has been Deleted.
+        // GET: /StoreManager/Deleted
+        public ActionResult Deleted()
+        {
+            return View();
         }
     }
 }
