@@ -116,6 +116,7 @@
     <Compile Include="Models\Album.cs">
       <DependentUpon>StoreDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Albums.cs" />
     <Compile Include="Models\Artist.cs">
       <DependentUpon>StoreDB.tt</DependentUpon>
     </Compile>
