@@ -8,6 +8,7 @@ using MusicStoreMVC.ViewModels;
 
 namespace MusicStoreMVC.Controllers
 {
+    [Authorize]
     public class StoreManagerController : Controller
     {
         MusicStoreEntities storeDB = new MusicStoreEntities();
